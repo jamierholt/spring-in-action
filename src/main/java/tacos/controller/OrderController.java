@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @RequestMapping("/orders")
 public class OrderController {
 
-    @GetMapping
+    @GetMapping("/current")
     public String orderForm(Model model) {
         model.addAttribute("order", new Order());
         return "orderForm";

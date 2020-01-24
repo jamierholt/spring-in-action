@@ -18,13 +18,13 @@ public class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    // technically we aren't testing a controller class anymore, we are testing addViewControllers in the webConfig
     @Test
     public void testHomePage() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home"))
                 .andExpect(content().string(containsString("Welcome to...")));
-
     }
 
 }

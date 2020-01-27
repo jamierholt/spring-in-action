@@ -35,7 +35,7 @@ public class JdbcIngredientRepository implements IngredientRepository {
                 "insert into Ingredient (id, name, type) values (?, ?, ?)", ingredient.getId(),
                 ingredient.getName(),
                 ingredient.getType().toString());
-        
+
         return ingredient;
     }
 

@@ -5,9 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import tacos.dao.IngredientRepository;
+import tacos.dao.TacoRepository;
 import tacos.model.Ingredient;
 import tacos.model.Ingredient.Type;
 import tacos.model.Taco;
@@ -29,6 +32,12 @@ public class DesignTacoControllerTest {
     private static Taco design;
     private static List<Ingredient> ingredients;
 
+    @MockBean
+    private IngredientRepository ingredientRepository;
+
+    @MockBean
+    private TacoRepository tacoRepository;
+
     /**
      * Set up our objects with data to be used during tests
      */
@@ -49,7 +58,10 @@ public class DesignTacoControllerTest {
 
         design = new Taco();
         design.setName("Test Taco");
-        design.setIngredients(Arrays.asList("COTO", "CARN", "TMTO", "JACK", "SLSA", "SRCR"));
+        Arrays.asList(
+                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
+                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
+                new Ingredient("CHED", "Cheddar", Type.CHEESE));
     }
 
     @Test

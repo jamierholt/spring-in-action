@@ -1,6 +1,6 @@
 package tacos.controller;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,9 @@ import tacos.model.Taco;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -41,8 +43,8 @@ public class DesignTacoControllerTest {
     /**
      * Set up our objects with data to be used during tests
      */
-    @BeforeAll
-    public static void setup() {
+    @BeforeEach
+    public void setup() {
         ingredients = Arrays.asList(
             new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
             new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
@@ -55,6 +57,15 @@ public class DesignTacoControllerTest {
             new Ingredient("SLSA", "Salsa", Type.SAUCE),
             new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
         );
+
+        when(ingredientRepository.findAll()).thenReturn(ingredients);
+
+        when(ingredientRepository.findById("FLTO"))
+                .thenReturn(Optional.of(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP)));
+        when(ingredientRepository.findById("GRBF"))
+                .thenReturn(Optional.of(new Ingredient("GRBF", "Ground Beef", Type.PROTEIN)));
+        when(ingredientRepository.findById("CHED"))
+                .thenReturn(Optional.of(new Ingredient("CHED", "Cheddar", Type.CHEESE)));
 
         design = new Taco();
         design.setName("Test Taco");
